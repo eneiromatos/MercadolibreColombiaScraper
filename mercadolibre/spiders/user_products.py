@@ -14,8 +14,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+from datetime import datetime
 import scrapy
-from ..items import MercadolibreItem
+from ..items import MercadolibreItem, MercasdolibreUserItem
 from scrapy.loader import ItemLoader
 
 
@@ -57,6 +58,13 @@ class UserProductsSpider(scrapy.Spider):
         yield scrapy.Request(url, self.parse, headers=self.headers)
 
     def parse(self, response):
+
+        item = ItemLoader(MercasdolibreUserItem(), response)
+        item.add_value("user_url", response.url)
+        item.add_css("username", '.store-info__name::text')
+        item.add_value("date_time", datetime.now())
+        yield item.load_item()
+
         products_page = response.css("a.publications__subtitle::attr(href)").get()
         yield response.follow(
             products_page, self.parse_products_list, headers=self.headers

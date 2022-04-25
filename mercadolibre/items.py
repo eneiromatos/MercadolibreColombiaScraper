@@ -69,3 +69,12 @@ class MercadolibreItem(scrapy.Item):
     in_stock = scrapy.Field(
         input_processor=MapCompose(stock_to_num), output_processor=TakeFirst()
     )
+
+
+class MercasdolibreUserItem(scrapy.Item):
+
+    username = scrapy.Field(output_processor=TakeFirst())
+
+    user_url = scrapy.Field(output_processor=TakeFirst())
+
+    date_time = scrapy.Field(output_processor=TakeFirst())
