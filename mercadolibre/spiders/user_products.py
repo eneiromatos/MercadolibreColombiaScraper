@@ -81,12 +81,20 @@ class UserProductsSpider(scrapy.Spider):
         article = ItemLoader(MercadolibreItem(), response)
         article.add_value("url", response.url)
         article.add_css("title", "h1.ui-pdp-title::text")
-        article.add_css("price", "span.andes-money-amount__fraction::text")
+        article.add_css(
+            "last_price",
+            's[class="andes-money-amount ui-pdp-price__part ui-pdp-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"] span.andes-money-amount__fraction::text',
+        )
+        article.add_css(
+            "current_price",
+            "div.ui-pdp-price__second-line span.andes-money-amount__fraction::text",
+        )
         article.add_css("is_top_sales", "a.ui-pdp-promotions-pill-label__target::text")
         article.add_css("rating", "p.ui-pdp-reviews__rating__summary__average::text")
         article.add_css(
             "has_free_shipping",
             'svg[class="ui-pdp-icon ui-pdp-icon--shipping ui-pdp-icon--truck ui-pdp-color--GREEN"]::attr(class)',
         )
+        article.add_css("in_stock", "span.ui-pdp-buybox__quantity__available::text")
 
         yield article.load_item()

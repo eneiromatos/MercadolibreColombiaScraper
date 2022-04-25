@@ -16,16 +16,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import scrapy
 from itemloaders.processors import MapCompose, TakeFirst
+import re
 
 
 def top_sales(value: str) -> bool:
-    if value is not None:
-        return True
+    return True
 
 
 def free_shipping(value: str) -> str:
-    if value is not None:
-        return True
+    return True
 
 
 def price_to_num(value: str) -> float:
@@ -37,13 +36,21 @@ def rating_to_num(value: str) -> float:
     return float(value)
 
 
+def stock_to_num(value: str) -> int:
+    return int(re.findall(r"[0-9]+", value)[0])
+
+
 class MercadolibreItem(scrapy.Item):
 
     url = scrapy.Field(output_processor=TakeFirst())
 
     title = scrapy.Field(output_processor=TakeFirst())
 
-    price = scrapy.Field(
+    current_price = scrapy.Field(
+        input_processor=MapCompose(price_to_num), output_processor=TakeFirst()
+    )
+
+    last_price = scrapy.Field(
         input_processor=MapCompose(price_to_num), output_processor=TakeFirst()
     )
 
@@ -57,4 +64,8 @@ class MercadolibreItem(scrapy.Item):
 
     has_free_shipping = scrapy.Field(
         input_processor=MapCompose(free_shipping), output_processor=TakeFirst()
+    )
+
+    in_stock = scrapy.Field(
+        input_processor=MapCompose(stock_to_num), output_processor=TakeFirst()
     )
