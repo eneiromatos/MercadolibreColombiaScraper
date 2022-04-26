@@ -80,4 +80,6 @@ class MercasdolibreUserItem(scrapy.Item):
 
     user_url = scrapy.Field(output_processor=TakeFirst())
 
+    leader_status = scrapy.Field(output_processor=TakeFirst())
+
     date_time = scrapy.Field(output_processor=TakeFirst())

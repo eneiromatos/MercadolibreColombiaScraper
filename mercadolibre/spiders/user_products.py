@@ -62,6 +62,7 @@ class UserProductsSpider(scrapy.Spider):
         item = ItemLoader(MercasdolibreUserItem(), response)
         item.add_value("user_url", response.url)
         item.add_css("username", ".store-info__name::text")
+        item.add_css("leader_status", 'div.leader-status__icon > p.message__title::text')
         item.add_value("date_time", datetime.now())
         yield item.load_item()
 

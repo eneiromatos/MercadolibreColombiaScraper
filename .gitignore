@@ -5154,3 +5154,5 @@ mercadolibre/__pycache__/
 .vscode/settings.json
 data.json
 .gitignore
+mercadolibre/__pycache__/items.cpython-310.pyc
+mercadolibre/spiders/__pycache__/user_products.cpython-310.pyc
