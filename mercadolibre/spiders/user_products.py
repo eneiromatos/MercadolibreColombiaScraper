@@ -61,7 +61,7 @@ class UserProductsSpider(scrapy.Spider):
 
         item = ItemLoader(MercasdolibreUserItem(), response)
         item.add_value("user_url", response.url)
-        item.add_css("username", '.store-info__name::text')
+        item.add_css("username", ".store-info__name::text")
         item.add_value("date_time", datetime.now())
         yield item.load_item()
 
@@ -101,7 +101,7 @@ class UserProductsSpider(scrapy.Spider):
         article.add_css("rating", "p.ui-pdp-reviews__rating__summary__average::text")
         article.add_css(
             "has_free_shipping",
-            'svg[class="ui-pdp-icon ui-pdp-icon--shipping ui-pdp-icon--truck ui-pdp-color--GREEN"]::attr(class)',
+            'div[class="ui-pdp--sticky-wrapper ui-pdp--sticky-wrapper-right"] figure + div.ui-pdp-media__body p[class*="GREEN"]::text',
         )
         article.add_css("in_stock", "span.ui-pdp-buybox__quantity__available::text")
 

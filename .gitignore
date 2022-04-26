@@ -5149,6 +5149,8 @@ venv/Scripts/tldextract.exe
 venv/Scripts/trial.exe
 venv/Scripts/twist.exe
 venv/Scripts/twistd.exe
-venv/Scripts/__pycache__/jp.cpython-310.pyc
+venv/Scripts/__pycache__/
+mercadolibre/__pycache__/
 .vscode/settings.json
 data.json
+.gitignore

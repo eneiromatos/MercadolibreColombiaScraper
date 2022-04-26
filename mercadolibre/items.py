@@ -20,11 +20,13 @@ import re
 
 
 def top_sales(value: str) -> bool:
-    return True
+    if "más vendido" in value.casefold():
+        return True
 
 
 def free_shipping(value: str) -> str:
-    return True
+    if value.casefold().strip() in ("llega gratis", "envío gratis a nivel nacional"):
+        return True
 
 
 def price_to_num(value: str) -> float:
@@ -63,7 +65,8 @@ class MercadolibreItem(scrapy.Item):
     )
 
     has_free_shipping = scrapy.Field(
-        input_processor=MapCompose(free_shipping), output_processor=TakeFirst()
+        input_processor=MapCompose(free_shipping),
+        output_processor=TakeFirst(),
     )
 
     in_stock = scrapy.Field(
